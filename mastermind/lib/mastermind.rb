@@ -1,8 +1,9 @@
-require "mastermind/version"
+require_relative "./mastermind/version"
+
 
 module Mastermind
-  # Your code goes here...
 end
 
-require_relative "../codemaker.rb"
-require_relative "../codebreaker.rb"
+require_relative "./mastermind/codemaker.rb"
+require_relative "./mastermind/codebreaker.rb"
+require_relative "./mastermind/game.rb"
