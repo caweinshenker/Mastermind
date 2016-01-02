@@ -5,8 +5,9 @@ module Mastermind
 
     def initialize(player = false)
       @code = player ? input_code : random_code
-      p @code
-      p @code_hash
+      if player
+        puts "You are the mastermind!"
+      end
     end
 
     def random_code
@@ -30,6 +31,7 @@ module Mastermind
     end
 
     def input_code
+      puts "The valid colors are #{@@colors}"
       @code = []
       4.times do
         puts "Enter a number 1-6"
@@ -39,19 +41,19 @@ module Mastermind
       @code
     end
 
-    private
     #Just for testing purposes
     def set_code(code)
-      new_code = []
+      @code = []
       code.each do |color|
-        new_code.push(@@colors[color])
+        @code.push(@@colors[color])
       end
-      @code = new_code
+      set_code_hash
+      @code
     end
 
-    public
     def respond(guess)
       temp_code_hash = @code_hash.clone
+      checked_indices = []
       black_pegs = 0
       white_pegs = 0
       for i in (0..3) do
@@ -59,12 +61,21 @@ module Mastermind
         if color == @code[i]
           black_pegs += 1
           temp_code_hash[color] = temp_code_hash[color] - 1
-        elsif @code.include?(color) && temp_code_hash[color] > 0
+          checked_indices.push(i)
+        end
+      end
+      for i in (0..3) do
+        color = guess[i]
+        if @code.include?(color) && temp_code_hash[color] > 0 && !checked_indices.include?(i)
           white_pegs += 1
           temp_code_hash[color] = temp_code_hash[color] -1
         end
       end
       return [black_pegs, white_pegs]
+    end
+
+    def give_answer
+      @code
     end
 
   end

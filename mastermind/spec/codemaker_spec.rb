@@ -13,9 +13,11 @@ module Mastermind
     describe "respond" do
       it "Returns an array of the number of black pegs and white pegs" do
         secret = Codemaker.new(false)
-        guess = ["red", "yellow", "olive", "black"]
         secret.set_code([1, 3, 2, 6])
+        guess = ["red", "yellow", "purple", "red"]
+        guess2 = ["blue","blue", "blue", "blue"]
         expect(secret.respond(guess)).to eq [1, 1]
+        expect(secret.respond(guess2)).to eq [1,0]
       end
     end
 
